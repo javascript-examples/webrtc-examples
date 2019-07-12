@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        video {
+          max-width: 100%;
+          width: 320px;
+          filter: blur(4px) invert(1) opacity(0.5); // CSS filters
+          // filter: hue-rotate(180deg) saturate(200%); // SVG filters
+        }
+    </style>
+</head>
+<body>
+    <video autoplay playsinline></video>
+    <script>
+        'use strict';
+
+        const mediaStreamConstraints = {
+          video: true,
+        };
+
+        const localVideo = document.querySelector('video');
+
+        let localStream;
+
+        function gotLocalMediaStream(mediaStream) {
+          localStream = mediaStream;
+          localVideo.srcObject = mediaStream;
+        }
+
+        function handleLocalMediaStreamError(error) {
+          console.log('navigator.getUserMedia error: ', error);
+        }
+
+        // Initializes media stream.
+        navigator.mediaDevices
+            .getUserMedia(mediaStreamConstraints)
+            .then(gotLocalMediaStream)
+            .catch(handleLocalMediaStreamError);
+    </script>
+</body>
+</html>
